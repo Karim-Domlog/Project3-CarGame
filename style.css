@@ -72,9 +72,21 @@ body {
     position: fixed;
     top: 0px;
     right: 10px;
-    background: white;
+    background: rgb(255, 253, 253);
     height: 50px;
     width: 150px;
+    font-size: 30px;
+    white-space: nowrap;
+    padding: 12px;
+}
+
+#HighScore {
+    position: fixed;
+    top: 0px;
+    right: 230px;
+    background: white;
+    height: 50px;
+    width: 220px;
     font-size: 30px;
     white-space: nowrap;
     padding: 12px;
