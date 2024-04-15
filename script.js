@@ -1,8 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
     // Get references to elements
     const hero = document.querySelector('#hero');
+    const hero2 = document.querySelector('#hero2');
     const road = document.querySelector('#road');
     const villian = document.querySelector('#villian');
+    const villian2 = document.querySelector('#villian2');
     const gameOverMessage = document.querySelector('#gameOverMessage');
     const playAgainButton = document.querySelector('#playAgainButton');
 
@@ -10,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let score = 0;
     let highScore = localStorage.getItem('highScore') ? parseInt(localStorage.getItem('highScore')) : 0;
     document.querySelector('#HighScore').innerHTML = 'High Score: ' + highScore;
-
+    
     // Move the hero left
     function moveLeft() {
         const leftPos = parseInt(window.getComputedStyle(hero).getPropertyValue('left'));
@@ -27,18 +29,24 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Generate random position for villain
+    // Generate random position for villains
     function generateRandomPosition() {
-        const randomNumber = Math.floor(Math.random() * 3) * 100;
-        villian.style.left = randomNumber + 'px';
+        const randomPosition1 = Math.floor(Math.random() * 3) * 100;
+        let randomPosition2;
+        do {
+            randomPosition2 = Math.floor(Math.random() * 3) * 100;
+        } while (randomPosition1 === randomPosition2); // Ensure that the positions are different
+
+        villian.style.left = randomPosition1 + 'px';
+        villian2.style.left = randomPosition2 + 'px';
     }
 
     // Event listener for keydown events
     document.addEventListener('keydown', function (e) {
-        if (e.key == 'ArrowLeft') {
+        if (e.key == 'ArrowLeft' || e.key == 'a') {
             moveLeft();
         }
-        if (e.key == 'ArrowRight') {
+        if (e.key == 'ArrowRight' || e.key == 'd') {
             moveRight();
         }
     });
@@ -49,44 +57,48 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Check collision and update score
+    let gameOver = false; // Variable to track game over state
     function checkCollisionAndScore() {
-        const heroLeft = parseInt(window.getComputedStyle(hero).getPropertyValue('left'));
-        const villainLeft = parseInt(window.getComputedStyle(villian).getPropertyValue('left'));
-        const villainTop = parseInt(window.getComputedStyle(villian).getPropertyValue('top'));
-        if (heroLeft === villainLeft && villainTop >= 400) {
-            gameOverMessage.style.display = 'block';
-            playAgainButton.style.display = 'block';
-            villian.style.animation = 'none';
-            road.style.animation = 'none';
-            villian.style.top = villainTop + 'px';
-            clearTimeout(checkDead);
-            if (score > highScore) {
-                highScore = score;
-                localStorage.setItem('highScore', highScore);
-                document.querySelector('#HighScore').innerHTML = 'High Score: ' + highScore;
+        if (!gameOver) {
+            const heroLeft = parseInt(window.getComputedStyle(hero).getPropertyValue('left'));
+            const villianLeft = parseInt(window.getComputedStyle(villian).getPropertyValue('left'));
+            const villian2Left = parseInt(window.getComputedStyle(villian2).getPropertyValue('left'));
+            const villianTop = parseInt(window.getComputedStyle(villian).getPropertyValue('top'));
+            if ((heroLeft === villianLeft && villianTop >= 460) || (heroLeft === villian2Left && villianTop >= 350)) {
+                gameOver = true;
+                hero.src = 'hero2.png'; // Change hero's image
+                endGame();
+            } else {
+                score++;
+                document.querySelector('#score').innerHTML = 'Score: ' + score;
             }
-        } else {
-            score++;
-            document.querySelector('#score').innerHTML = 'Score: ' + score;
         }
     }
 
     // Interval for checking collision and updating score
     const checkDead = setInterval(checkCollisionAndScore, 100);
 
-    function gameOver() {
+    function endGame() {
         // Display the game over message
         gameOverMessage.style.display = 'block';
-        
+
         // Display the "Play Again" button
         playAgainButton.style.display = 'block';
-        
+
         // Stop the animations
         villian.style.animation = 'none';
+        villian2.style.animation = 'none';
         road.style.animation = 'none';
-        
+
         // Stop checking for hero's death
-        clearTimeout(checkDead);
+        clearInterval(checkDead);
+
+        // Update high score if necessary
+        if (score > highScore) {
+            highScore = score;
+            localStorage.setItem('highScore', highScore);
+            document.querySelector('#HighScore').innerHTML = 'High Score: ' + highScore;
+        }
     }
 
     // Event listener for the "Play Again" button
@@ -94,4 +106,5 @@ document.addEventListener('DOMContentLoaded', function () {
         // Reload the page to restart the game
         location.reload();
     });
+
 });
