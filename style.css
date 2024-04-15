@@ -8,15 +8,18 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: url('background image.jpg'); /* Add the background image */
+    background-image: url('/Images/background image.jpg');
     background-size: cover;
     background-repeat: no-repeat;
 }
 
+
+
+
 #road {
     width: 300px;
     height: 600px;
-    background-image: url('road.jpg');
+    background-image: url('/Images/road.jpg');
     animation: moveRoad 2s linear infinite;
     background-repeat: repeat-y;
     background-position: 0%;
@@ -34,16 +37,30 @@ body {
 }
 
 #hero {
-    width: 100px;
+    width: 150px;
     height: 100px;
     position: relative;
-    top: 400px;
+    top: 290px;
     left: 100px;
-    background-image: url('hero.png');
+    background-image: url('/Images/hero.png');
     background-size: 50% 100%;
     background-repeat: no-repeat;
-    background-position-x: 50%;
+    background-position-x: 25%;
 }
+
+#hero2 {
+    width: 150px;
+    height: 100px;
+    position: relative;
+    top: 290px;
+    left: 100px;
+    background-image: url('/Images/hero2.png');
+    background-size: 50% 100%;
+    background-repeat: no-repeat;
+    background-position-x: 25%;
+    display: none;
+}
+
 
 #villian {
     width: 100px;
@@ -51,12 +68,26 @@ body {
     position: relative;
     top: 0px;
     left: 0px;
-    background-image: url('villian.png');
-    background-size: 50% 100%;
+    background-image: url('/Images/rock.png');
+    background-size: 70% 50%;
     background-repeat: no-repeat;
     background-position-x: 50%;
     animation: blockHero 2s linear infinite
 }
+
+#villian2 {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    background-image: url('/Images/banana.png');
+    background-size: 70% 50%;
+    background-repeat: no-repeat;
+    background-position-x: 50%;
+    animation: blockHero 2s linear infinite;
+}
+
 
 @keyframes blockHero {
     0% {
@@ -74,7 +105,7 @@ body {
     right: 10px;
     background: rgb(255, 253, 253);
     height: 50px;
-    width: 150px;
+    width: 170px;
     font-size: 30px;
     white-space: nowrap;
     padding: 12px;
@@ -83,27 +114,14 @@ body {
 #HighScore {
     position: fixed;
     top: 0px;
-    right: 230px;
+    right: 220px;
     background: white;
     height: 50px;
-    width: 240px;
+    width: 260px;
     font-size: 30px;
     white-space: nowrap;
     padding: 12px;
 }
- 
-#playAgainButton {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgb(0, 255, 55);
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    display: none;
-  }
 
 #gameOverMessage {
     position: absolute;
@@ -115,4 +133,23 @@ body {
     border: none;
     border-radius: 5px;
     display: none;
-  }
+}
+
+#playAgainButton {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(0, 255, 55);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: none;
+}
+
+
+#controls {
+    position: absolute;
+    top: 90%
+}
